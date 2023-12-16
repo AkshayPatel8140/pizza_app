@@ -58,34 +58,34 @@ class Order(Display):
         output = ""
         output += f"Order ID: {self.__order_id}\n"
         # output += f"Order Delivery date: {self.__d_datetime.strftime('%m-%d-%Y')}\n"
-        output += f"Order Delivery date: {self.__d_date}\n"
+        output += f" Order Delivery date: {self.__d_date}\n"
         # output += f"Order Delivery time: {self.__d_datetime.strftime('%I:%M:%S %p')}\n"
-        output += f"Order Delivery time: {self.__d_time}\n"
-        output += f"Customer's Name: {self.__c_name}\n"
-        output += f"Customer's Email: {self.__c_email}\n"
-        output += f"Customer's Phone Number: {self.__c_phone_no}\n"
-        output += f"Compony: {self.__compony}\n"
-        output += f"Order Pizza: \n"
+        output += f" Order Delivery time: {self.__d_time}\n"
+        output += f" Customer's Name: {self.__c_name}\n"
+        output += f" Customer's Email: {self.__c_email}\n"
+        output += f" Customer's Phone Number: {self.__c_phone_no}\n"
+        output += f" Compony: {self.__compony}\n"
+        output += f" Order Pizza: \n"
         for pizzaItem in self.__order_pizzas:
-            output += " { "
+            output += "  { "
             output += f"Name: {pizzaItem[0].name}({pizzaItem[0].size.value}), "
             output += f"Description: {pizzaItem[0].description}" + " } * "
             output += f"Quantity: {pizzaItem[1]} -> "
             output += f"Price: {pizzaItem[0].get_price_based_on_size() * pizzaItem[1]}\n"
         if len(self.__sideDishes) > 0:
-            output += f"Order Side Dishes: \n"
+            output += f" Order Side Dishes: \n"
             for sideItem in self.__sideDishes:
                 sideDish = self.sideDishesManager.get_sideDish_by_name(sideItem[0])
                 if sideDish != None:
-                    output += f" Name: {sideDish.name} * "
+                    output += f"  Name: {sideDish.name} * "
                     output += f"Quantity: {sideItem[1]} -> "
                     output += f"Price: {sideDish.price * sideItem[1]}\n"
 
-        output += f"Total price: {self.__total_price}\n"
+        output += f" Total price: {self.__total_price}\n"
         return output
 
     def __repr__(self) -> str:
-        return "\n{ " + str(self) + " }\n"
+        return "\n{\n " + str(self) + "}"
 
     def display(self):
         print(str(self))
@@ -165,7 +165,8 @@ class Order(Display):
                 new_quantity = self.__sideDishes[index][1] + quantity
                 itemTotalPrice = sideDishItem.price * new_quantity
                 self.__sideDishes[index] = (item_name, new_quantity, itemTotalPrice)
-            self.sideDishesManager.useSideDish(sideDishItem, quantity)
+            # self.sideDishesManager.useSideDish(sideDishItem, quantity)
+            self.__total_price = self.get_total_price()
             return True
         else:
             return False
@@ -185,7 +186,8 @@ class Order(Display):
                 else:
                     itemTotalPrice = sideDishItem.price * new_quantity
                     self.__sideDishes[index] = (item_name, new_quantity, itemTotalPrice)
-                    self.sideDishesManager.unUseSideDish(sideDishItem, quantity)
+                    # self.sideDishesManager.unUseSideDish(sideDishItem, quantity)
+                self.__total_price = self.get_total_price()
                 return True
             else:
                 return False

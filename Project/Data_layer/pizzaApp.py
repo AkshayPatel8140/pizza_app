@@ -1,6 +1,7 @@
 from abstract import *
 from ingredient import Ingredient
 from ingredientManager import IngredientManager
+from order import Order
 from orderManager import OrderManager
 from pizza import Pizza
 from pizzaManager import PizzaManager
@@ -16,6 +17,7 @@ class PizzaApp:
         self.__sideDishManager = SideDishManager()
         self.__recipeManager = RecipeManager()
         self.__pizzaManager = PizzaManager()
+        self.__orderManager = OrderManager()
 
     def show_program_title(self) -> None:
         print("\n===!! SFBU Pizza system !!===\n")
@@ -38,7 +40,7 @@ class PizzaApp:
         print("4. Add Ingredient quantity")
         print("5. Remove Ingredient quantity")
         print("6. Delete Ingredient")
-        print("7. Exit")
+        print("7. Exit for Ingredient menu")
 
     def get_ingredient_category(self) -> IngredientCategory:
         while True:
@@ -116,7 +118,7 @@ class PizzaApp:
         print("4. Add SideDish quantity")
         print("5. Remove SideDish quantity")
         print("6. Delete SideDish")
-        print("7. Exit")
+        print("7. Exit for SideDish menu")
 
     def get_sideDish_category(self) -> SideDishesCategory:
         while True:
@@ -200,7 +202,7 @@ class PizzaApp:
         print("3. Add New Recipe")
         print("4. Delete Recipe")
         print("5. Update the Recipe")
-        print("6. Exit")
+        print("6. Exit for Recipe menu")
 
     def addIngredientInRecipe(self, recipe: Recipe) -> Recipe | None:
         confirmCount = True
@@ -290,7 +292,7 @@ class PizzaApp:
         print("2. Search Pizza by name")
         print("3. Add New Pizza")
         print("4. Delete Pizza")
-        print("5. Exit")
+        print("5. Exit for Pizza menu")
 
     def get_pizza_size(self) -> PizzaSize:
         while True:
@@ -372,6 +374,120 @@ class PizzaApp:
             print("\n!! Pizza removed !!")
         else:
             print("Pizza not found")
+
+    # Order Methods
+    def show_Order_Management(self) -> None:
+        print("\n=== Order Management ===")
+        print("1. Get list of Order")
+        print("2. Search Order by name")
+        print("3. Search Order by order Id")
+        print("4. Add New Order")
+        print("5. Delete Order")
+        print("6. Exit for Order menu")
+
+    def get_sideDish_for_Order(self) -> dict[str, int]:
+        sideDishList = {}
+        print("SideDishes :", self.__sideDishManager.list_dish())
+        confirmStatus = True
+        while confirmStatus:
+            name = input("\nPlease enter name of SideDish: ")
+            checkSideDish = self.__sideDishManager.get_sideDish_by_name(name)
+            if checkSideDish is None:
+                print(f"\n{name} dish is not found in the store")
+            else:
+                sideDishQuantity = input(f"Please enter the quantity of the side dish for the {name} : ")
+                if sideDishQuantity.isdigit():
+                    sideDishList[name] = int(sideDishQuantity)
+                else:
+                    print("Quantity should be digit and not in point values")
+            confirmStatusValue = input("Do you want to add other the side dish in the order? [Y/N]: ")
+            if confirmStatusValue.lower() == "n":
+                confirmStatus = False
+        return sideDishList
+
+    def get_pizza_for_order(self) -> list[tuple[Pizza, int]]:
+        pizzaList = []
+        pre_pizza_list = self.__pizzaManager.get_pizzaList()
+        pre_pizza_list_length = len(pre_pizza_list)
+        for i, pre_pizza in enumerate(pre_pizza_list):
+            print(f"{i+1}) Name: {pre_pizza.name}, Size: {pre_pizza.size.value},  Description: {pre_pizza.description} -> Price: ${pre_pizza.basePrice}")
+        confirmStatus = True
+        while confirmStatus:
+            selectedPizzaIndex = input(f"Please select the pizza from above list (1 to {pre_pizza_list_length}): ")
+            if selectedPizzaIndex.isdigit():
+                pizzaSize = self.get_pizza_size()
+                pizzaQuantity = input("Enter the quantity of the pizza : ")
+                if pizzaQuantity.isdigit():
+                    selectedPizza = self.__pizzaManager.search_by_name(pre_pizza_list[int(selectedPizzaIndex) - 1].name)
+                    if selectedPizza is not None:
+                        selectedPizza.size = pizzaSize
+                        pizzaList.append((selectedPizza, int(pizzaQuantity)))
+                else:
+                    print("quantity should be in digit")
+            else:
+                print("Please enter proper selection")
+            confirmStatusValue = input("Do you want to add other the pizza in the order? [Y/N]: ")
+            if confirmStatusValue.lower() == "n":
+                confirmStatus = False
+        return pizzaList
+
+    def get_custom_pizza_for_order(self) -> list[tuple[Pizza, int]]:
+        pizzaList = []
+        confirmStatus = True
+        while confirmStatus:
+            selectedPizza = self.createPizza()
+            pizzaQuantity = input("Enter the quantity of the pizza : ")
+            if pizzaQuantity.isdigit():
+                pizzaList.append((selectedPizza, int(pizzaQuantity)))
+            else:
+                print("quantity should be in digit")
+            confirmStatusValue = input("Do you want to add other the pizza in the order? [Y/N]: ")
+            if confirmStatusValue.lower() == "n":
+                confirmStatus = False
+        return pizzaList
+
+    def createOrder(self) -> Order | None:
+        order_id = self.__orderManager.getLastOrderId() + 1
+        c_name = input("Enter customer name : ")
+        if c_name == "":
+            print("customer name not should be blank")
+            return None
+        c_email = input("Enter customer email : ")
+        if c_email == "":
+            print("customer email not should be blank")
+            return None
+        c_phone_no = input("Enter customer phone number : ")
+        if c_phone_no == "":
+            print("customer phone Number not should be blank")
+            return None
+        compony = input("Enter customer compony name : ")
+        if compony == "":
+            print("customer compony name not should be blank")
+            return None
+        date = input("Enter order delivery date (MM/DD/YYYY): ")
+        if date == "":
+            print("order delivery date not should be blank")
+            return None
+        time = input("Enter order delivery time (HH:MM AM): ")
+        if time == "":
+            print("order delivery time not should be blank")
+            return None
+
+        sideDishList = self.get_sideDish_for_Order()
+        prePizzaList = self.get_pizza_for_order()
+        confirmForCustomPizza = input("Do you want to add custom pizza in the order? [Y/N]: ")
+        customPizzaList = []
+        if confirmForCustomPizza.lower() == "y":
+            customPizzaList = self.get_custom_pizza_for_order()
+        order = Order(order_id, c_name, c_email, c_phone_no, compony, date, time)
+        for dish in sideDishList:
+            order.add_side_dish_in_order(dish, sideDishList[dish])
+        for pizzaData in prePizzaList:
+            order.add_remove_pizza_order(pizzaData[0], pizzaData[1])
+        for customPizzaData in customPizzaList:
+            order.add_remove_pizza_order(customPizzaData[0], customPizzaData[1])
+
+        return order
 
     def process_command(self, command: int) -> bool:
         count = True
@@ -500,8 +616,49 @@ class PizzaApp:
                         print("\n!!Please Enter proper choice to manage Pizza !!")
                 else:
                     print("\n!! Please enter proper value to manage Pizza !!")
-        elif command == 5:
-            pass
+        elif command == 5:  # Order Management
+            # self.__orderManager.read_from_db()
+            while True:
+                self.show_Order_Management()
+                orderMenuChoice = input("Please select you choice: ")
+                if orderMenuChoice.isdigit():
+                    orderMenuChoice = int(orderMenuChoice)
+                    if orderMenuChoice == 1:  # Get list of order
+                        self.__orderManager.display()
+                    elif orderMenuChoice == 2:  # Search order by name
+                        search_name = input("Please enter name of customer: ")
+                        searchedOrders = self.__orderManager.get_order_by_name(search_name)
+                        if len(searchedOrders) > 0:
+                            print("Orders:", searchedOrders)
+                        else:
+                            print("Order not found")
+                    elif orderMenuChoice == 3:  # Search order by order Id
+                        search_order_id = input("Please enter order Id: ")
+                        if search_order_id.isdigit():
+                            searchedOrders = self.__orderManager.get_order_by_order_id(int(search_order_id))
+                            if len(searchedOrders) > 0:
+                                print("Orders:", searchedOrders)
+                            else:
+                                print("Order not found")
+                        else:
+                            print("\n! Please enter proper order Id !")
+                    elif orderMenuChoice == 4:  # Add new order
+                        newOrder = self.createOrder()
+                        if newOrder is not None:
+                            self.__orderManager.add_order(newOrder)
+                            print("\n!! Order added successfully !!")
+                    elif orderMenuChoice == 5:  # Delete order
+                        search_order_id = input("Please enter order Id: ")
+                        if search_order_id.isdigit():
+                            self.__orderManager.remove_order(int(search_order_id))
+                        else:
+                            print("\n! Please enter proper order Id !")
+                    elif orderMenuChoice == 6:  # Exit
+                        break
+                    else:
+                        print("\n!!Please Enter proper choice to manage Pizza !!")
+                else:
+                    print("\n!! Please enter proper value to manage Pizza !!")
         elif command == 6:
             count = False
         else:

@@ -31,6 +31,9 @@ class OrderManager(Display):
         data = self.repo.get_items()
         self.__orderList = data
 
+    def getLastOrderId(self) -> int:
+        return self.__orderList[len(self.__orderList) - 1].order_id
+
     def add_order(self, newOrder: Order) -> bool:
         for i, oldOrder in enumerate(self.__orderList):
             if oldOrder.order_id == newOrder.order_id:

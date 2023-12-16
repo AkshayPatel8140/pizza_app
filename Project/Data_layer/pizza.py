@@ -29,6 +29,10 @@ class Pizza(Display):
     def size(self) -> PizzaSize:
         return self.__size
 
+    @size.setter
+    def size(self, value: PizzaSize) -> None:
+        self.__size = value
+
     @property
     def recipe(self) -> str:
         return self.__recipe
