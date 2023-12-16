@@ -4,7 +4,7 @@ from abstract import *
 from recipe import Recipe
 
 
-class RecipeRepository:
+class RecipeRepository(Repository):
     def __init__(self) -> None:
         self.__filename = "RecipeManagerData.json"
 

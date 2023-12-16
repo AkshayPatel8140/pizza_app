@@ -4,7 +4,7 @@ from abstract import *
 from sideDish import SideDish
 
 
-class SideDishRepository:
+class SideDishRepository(Repository):
     def __init__(self) -> None:
         self.__filename = "SideDishManagerData.json"
 

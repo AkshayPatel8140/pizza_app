@@ -7,8 +7,8 @@ from recipe import Recipe
 class IngredientManager(Display):
     def __init__(self) -> None:
         self.__ingredients: dict[str, Ingredient] = {}
-        self.repo = IngredientRepository()
-        self.repo.create_file()
+        self.__repo = IngredientRepository()
+        self.__repo.create_file()
         self.read_from_db()
 
     def __str__(self) -> str:
@@ -19,13 +19,13 @@ class IngredientManager(Display):
         return output
 
     def save_to_db(self) -> None:
-        self.repo.save_items(self.__ingredients)
+        self.__repo.save_items(self.__ingredients)
 
     def read_from_db(self) -> None:
-        data = self.repo.get_items()
+        data = self.__repo.get_items()
         self.__ingredients = data
 
-    def get_ingredient_by_name(self, name) -> None | Ingredient:
+    def get_ingredient_by_name(self, name: str) -> None | Ingredient:
         self.read_from_db()
         for ingredientItem in self.__ingredients.values():
             if ingredientItem.name.lower() == name.lower():
@@ -56,11 +56,6 @@ class IngredientManager(Display):
             return True
         else:
             return False
-
-    def use_ingredient(self, ingredient: Ingredient, quantity: float) -> None:
-        self.__ingredients[ingredient.name].quantity -= quantity
-        self.save_to_db()
-        self.check_reorder_levels()
 
     def delete_ingredient(self, ingredientName: str) -> bool:
         if ingredientName in self.__ingredients:

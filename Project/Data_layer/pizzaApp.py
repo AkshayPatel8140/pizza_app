@@ -227,7 +227,7 @@ class PizzaApp:
         if confirmCount == False:
             return recipe
 
-    def createRecipe(self):
+    def createRecipe(self) -> Recipe | None:
         name = input("Please enter name of Recipe: ")
         if name == "":
             print("Name not should be blank")

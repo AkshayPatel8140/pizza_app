@@ -1,8 +1,4 @@
-from typing import Optional
 from abstract import Display, SideDishesCategory as SiDi
-from recipe import Recipe
-from ingredient import Ingredient
-from functools import reduce
 
 
 class SideDish(Display):
@@ -81,16 +77,6 @@ class SideDish(Display):
     def display(self):
         return print(str(self))
 
-    def convert_to_list_for_db(self) -> list[int | float | str]:
-        lst = []
-        lst.append(self.__name)
-        lst.append(self.__quantity)
-        lst.append(self.__description)
-        lst.append(self.__price)
-        lst.append(self.__reorder_level)
-        lst.append(self.__category.value)
-        return lst
-
     def convert_to_dict_for_db(self) -> dict:
         dct = {}
         dct["name"] = self.__name
@@ -102,41 +88,8 @@ class SideDish(Display):
         return dct
 
 
-# class Appetizers(SideDish):
-#     def __init__(self, name: str, quantity: int, description: str, price: float, reorder_level: int) -> None:
-#         super().__init__(name, quantity, description, price, reorder_level)
-#         self.__category = SiDi.APPETIZERS
-
-
-# class Desserts(SideDish):
-#     def __init__(self, name: str, quantity: int, description: str, price: float, reorder_level: int) -> None:
-#         super().__init__(name, quantity, description, price, reorder_level)
-#         self.__category = SiDi.DESSERTS
-
-
-# class Beverages(SideDish):
-#     def __init__(self, name: str, quantity: int, description: str, price: float, reorder_level: int) -> None:
-#         super().__init__(name, quantity, description, price, reorder_level)
-#         self.__category = SiDi.BEVERAGES
-
-
-# class SideDishFactory:
-#     @staticmethod
-#     def get_product(product: SiDi, name: str, quantity: int, description: str, price: float, reorder_level: int) -> Optional[SideDish]:
-#         if product == SiDi.APPETIZERS:
-#             return Appetizers(name, quantity, description, price, reorder_level)
-#         elif product == SiDi.DESSERTS:
-#             return Desserts(name, quantity, description, price, reorder_level)
-#         elif product == SiDi.BEVERAGES:
-#             return Beverages(name, quantity, description, price, reorder_level)
-#         else:
-#             return None
-
-
 def main():
     pass
-    # sideDishFactory = SideDishFactory()
-    # appetizers = sideDishFactory.get_product(SiDi.APPETIZERS, "Caesar Salad", 15, "Caesar Salad Description", 4.30, 5)
 
 
 if __name__ == "__main__":

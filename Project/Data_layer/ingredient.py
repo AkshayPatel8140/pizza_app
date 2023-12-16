@@ -47,15 +47,6 @@ class Ingredient(Display):
             return self.__name.lower() == item.__name.lower()
         return False
 
-    def convert_to_list_for_db(self) -> list[int | str]:
-        lst = []
-        lst.append(self.__name)
-        lst.append(self.__quantity)
-        lst.append(self.__unit)
-        lst.append(self.__reorder_level)
-        lst.append(self.__category.value)
-        return lst
-
     def convert_to_dict_for_db(self) -> dict:
         dct = {}
         dct["name"] = self.__name
@@ -85,29 +76,8 @@ class Ingredient(Display):
             self.__price = new_price
 
 
-# class Base(Ingredient):
-#     def __init__(self, name: str, quantity: float, unit: str, reorder_level: int):
-#         super().__init__(name, quantity, unit, reorder_level, IngredientCategory.BASE)
-
-
-# class Toping(Ingredient):
-#     def __init__(self, name: str, quantity: float, unit: str, reorder_level: int):
-#         super().__init__(name, quantity, unit, reorder_level, IngredientCategory.TOPING)
-
-
-# class IngredientFactory:
-#     @staticmethod
-#     def get_ingredient(category: str, name: str, quantity: float, unit: str, reorder_level: int):
-#         if category == IngredientCategory.BASE.value:
-#             return Base(name, quantity, unit, reorder_level)
-#         elif category == IngredientCategory.TOPING.value:
-#             return Toping(name, quantity, unit, reorder_level)
-
-
 def main():
     print("Ingredient")
-    # ingredient1 = IngredientFactory.get_ingredient("base", "ing1", 10, "te", 2)
-    # ingredient2 = IngredientFactory.get_ingredient("toping", "ing1", 10, "te", 2)
 
 
 if __name__ == "__main__":

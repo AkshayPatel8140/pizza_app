@@ -4,7 +4,7 @@ from abstract import *
 from ingredient import Ingredient
 
 
-class IngredientRepository:
+class IngredientRepository(Repository):
     def __init__(self) -> None:
         self.__filename = "IngredientManagerData.json"
 
@@ -18,11 +18,11 @@ class IngredientRepository:
             with open(self.__filename, "w", newline="") as file:
                 pass
 
-    def save_items(self, itemsIngredient: dict[str, Ingredient]) -> None:
+    def save_items(self, items: dict[str, Ingredient]) -> None:
         with open(self.__filename, "w", newline="") as file:
             jsonData = {}
-            for item in itemsIngredient:
-                jsonData[item] = itemsIngredient[item].convert_to_dict_for_db()
+            for itemDate in items:
+                jsonData[itemDate] = items[itemDate].convert_to_dict_for_db()
             json_object = json.dumps(jsonData, indent=4)
             file.write(json_object)
 

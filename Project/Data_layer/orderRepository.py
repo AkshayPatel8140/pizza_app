@@ -1,17 +1,12 @@
-import csv
-import copy
 import json
 from abstract import *
 import os
 
-from ingredient import Ingredient
 from order import Order
 from pizza import Pizza
-from sideDish import SideDish
-from ingredient import Ingredient
 
 
-class OrderRepository:
+class OrderRepository(Repository):
     def __init__(self) -> None:
         self.__filename = "OrderManagerData.json"
 

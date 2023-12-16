@@ -10,8 +10,8 @@ from recipeRepository import RecipeRepository
 class RecipeManager(Display):
     def __init__(self) -> None:
         self.__recipeList: list[Recipe] = []
-        self.repo = RecipeRepository()
-        self.repo.create_file()
+        self.__repo = RecipeRepository()
+        self.__repo.create_file()
         self.read_from_db()
 
     def __str__(self) -> str:
@@ -21,11 +21,11 @@ class RecipeManager(Display):
         return output
 
     def save_to_db(self) -> None:
-        self.repo.save_items(self.__recipeList)
+        self.__repo.save_items(self.__recipeList)
         self.read_from_db()
 
     def read_from_db(self) -> None:
-        data = self.repo.get_items()
+        data = self.__repo.get_items()
         self.__recipeList = data
 
     def add_recipe(self, recipe: Recipe) -> bool:

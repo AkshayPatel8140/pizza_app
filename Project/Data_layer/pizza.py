@@ -1,7 +1,4 @@
 from abstract import Display, PizzaCategory, PizzaSize
-from recipe import Recipe
-from datetime import date, datetime
-from functools import reduce
 
 
 class Pizza(Display):
@@ -74,16 +71,6 @@ class Pizza(Display):
 
     def display(self):
         print(str(self))
-
-    def convert_to_list_for_db(self) -> list[int | float | str]:
-        lst = []
-        lst.append(self.__name)
-        lst.append(self.__description)
-        lst.append(self.__basePrice)
-        lst.append(self.__size.value)
-        lst.append(self.__recipe)
-        lst.append(self.__category.value)
-        return lst
 
     def convert_to_dict_for_db(self) -> dict:
         dct = {}

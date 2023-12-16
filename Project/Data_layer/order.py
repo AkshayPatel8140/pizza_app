@@ -96,17 +96,6 @@ class Order(Display):
     def display(self):
         print(str(self))
 
-    def convert_to_list_for_db(self) -> list[int | float | str]:
-        lst = []
-        lst.append(self.__order_id)
-        lst.append(self.__c_name)
-        lst.append(self.__c_email)
-        lst.append(self.__c_phone_no)
-        lst.append(self.__compony)
-        lst.append(self.__total_price)
-        lst.append(self.__d_date)
-        return lst
-
     def convert_to_dict_for_db(self) -> dict:
         dct = {}
         dct["order_id"] = self.__order_id
@@ -129,12 +118,6 @@ class Order(Display):
             sideDishData[itemJsonName] = {"name": item[0], "quantity": item[1]}
         dct["sideDish_list"] = sideDishData
         return dct
-
-    def pizza_convert_to_list(self) -> list[Pizza]:
-        pizzaList = []
-        for pizza in self.__order_pizzas:
-            pizzaList.append(pizza)
-        return pizzaList
 
     def find_order_pizza_index(self, item: Pizza):
         for i, order_pizza_item in enumerate(self.__order_pizzas):
@@ -171,7 +154,6 @@ class Order(Display):
                 new_quantity = self.__sideDishes[index][1] + quantity
                 itemTotalPrice = sideDishItem.price * new_quantity
                 self.__sideDishes[index] = (item_name, new_quantity, itemTotalPrice)
-            # self.sideDishesManager.useSideDish(sideDishItem, quantity)
             self.__total_price = self.get_total_price()
             return True
         else:
@@ -187,12 +169,10 @@ class Order(Display):
             if sideDishItem is not None:
                 new_quantity = self.__sideDishes[index][1] - quantity
                 if new_quantity <= 0:
-                    self.sideDishesManager.unUseSideDish(sideDishItem, self.__sideDishes[index][1])
                     self.__sideDishes.pop(index)
                 else:
                     itemTotalPrice = sideDishItem.price * new_quantity
                     self.__sideDishes[index] = (item_name, new_quantity, itemTotalPrice)
-                    # self.sideDishesManager.unUseSideDish(sideDishItem, quantity)
                 self.__total_price = self.get_total_price()
                 return True
             else:

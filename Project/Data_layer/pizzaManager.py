@@ -1,15 +1,14 @@
 from typing import Optional
-from abstract import Display, PizzaCategory, PizzaSize
+from abstract import Display, PizzaCategory
 from pizzaRepository import PizzaRepository
-from recipe import Recipe
 from pizza import Pizza
 
 
 class PizzaManager(Display):
     def __init__(self) -> None:
         self.__pizzaList: list[Pizza] = []
-        self.repo = PizzaRepository()
-        self.repo.create_file()
+        self.__repo = PizzaRepository()
+        self.__repo.create_file()
         self.read_from_db()
 
     def __str__(self) -> str:
@@ -18,11 +17,11 @@ class PizzaManager(Display):
         return output
 
     def save_to_db(self) -> None:
-        self.repo.save_items(self.__pizzaList)
+        self.__repo.save_items(self.__pizzaList)
         self.read_from_db()
 
     def read_from_db(self) -> None:
-        data = self.repo.get_items()
+        data = self.__repo.get_items()
         self.__pizzaList = data
 
     def add_new_pizza(self, pizza: Pizza) -> None:

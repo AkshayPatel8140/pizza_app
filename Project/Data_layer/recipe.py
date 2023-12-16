@@ -7,9 +7,7 @@ from functools import reduce
 class Recipe(Display):
     def __init__(self, name: str) -> None:
         self.__name: str = name
-        self.__ingredients: list[tuple[str, int]] = []
-        # self.__ingredientsNew: dict[str, int] = {"Pepperoni": 2, "Hum": 2, "Bacon": 4}
-        self.__ingredientsNew: dict[str, int] = {}
+        self.__ingredients: dict[str, int] = {}
 
     @property
     def name(self) -> str:
@@ -22,7 +20,7 @@ class Recipe(Display):
     def __str__(self) -> str:
         output = ""
         output += f"Recipe name: {self.__name}, "
-        output += f"Ingredients: {self.__ingredientsNew}"
+        output += f"Ingredients: {self.__ingredients}"
         return output
 
     def __eq__(self, item: object) -> bool:
@@ -32,61 +30,49 @@ class Recipe(Display):
 
     def __repr__(self) -> str:
         output = f"Name: {self.__name}: "
-        output += f"Ingredients: {self.__ingredientsNew}"
+        output += f"Ingredients: {self.__ingredients}"
         return "\n{ " + str(output) + " }"
-
-    def convert_to_list_for_db(self) -> list[int | float | str]:
-        lst = []
-        ingredientItemList = ""
-        lengthOfIngredients = len(self.__ingredientsNew)
-        lst.append(self.__name)
-        for i, item in enumerate(self.__ingredientsNew):
-            ingredientItemList += f"{item}-{self.__ingredientsNew[item]}"
-            if i < lengthOfIngredients - 1:
-                ingredientItemList += "/"
-        lst.append(ingredientItemList)
-        return lst
 
     def convert_to_dict_for_db(self) -> dict:
         dct = {}
         dct["name"] = self.__name
-        dct["ingredients"] = self.__ingredientsNew
+        dct["ingredients"] = self.__ingredients
         return dct
 
     def get_ingredient_name(self) -> str:
         listOfIngredients: str = ""
-        lengthOfIngredients = len(self.__ingredientsNew)
-        for i, item in enumerate(self.__ingredientsNew):
-            print(item, self.__ingredientsNew[item])
+        lengthOfIngredients = len(self.__ingredients)
+        for i, item in enumerate(self.__ingredients):
+            print(item, self.__ingredients[item])
             listOfIngredients += f"{item}"
             if i < lengthOfIngredients - 1:
                 listOfIngredients += ", "
         return listOfIngredients
 
     def remove_ingredient_quantity_in_db(self, db) -> None:
-        for ingredients_name in self.__ingredientsNew:
-            db.remove_quantity(ingredients_name, self.__ingredientsNew[ingredients_name])
+        for ingredients_name in self.__ingredients:
+            db.remove_quantity(ingredients_name, self.__ingredients[ingredients_name])
 
     def add_ingredient_quantity_in_db(self, db) -> None:
-        for ingredients_name in self.__ingredientsNew:
-            db.add_quantity(ingredients_name, self.__ingredientsNew[ingredients_name])
+        for ingredients_name in self.__ingredients:
+            db.add_quantity(ingredients_name, self.__ingredients[ingredients_name])
 
     def display(self):
         print(str(self))
 
     def add_ingredient(self, ingredients_name: str, quantity: int) -> bool:
-        if ingredients_name in self.__ingredientsNew:
-            self.__ingredientsNew[ingredients_name] += quantity
+        if ingredients_name in self.__ingredients:
+            self.__ingredients[ingredients_name] += quantity
         else:
-            self.__ingredientsNew[ingredients_name] = quantity
+            self.__ingredients[ingredients_name] = quantity
         return True
 
     def remove_all_ingredient(self) -> None:
-        self.__ingredientsNew = {}
+        self.__ingredients = {}
 
-    def remove_ingredient(self, ingredient_name: str) -> bool:
-        del self.__ingredientsNew[ingredient_name]
-        return True
+    # def remove_ingredient(self, ingredient_name: str) -> bool:
+    #     del self.__ingredients[ingredient_name]
+    #     return True
 
 
 def main():

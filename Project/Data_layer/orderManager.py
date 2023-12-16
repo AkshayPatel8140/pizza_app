@@ -1,11 +1,7 @@
-from abstract import Display, SideDishesCategory as SiDi
+from abstract import Display
 from pizza import Pizza
 from pizzaManager import PizzaManager
-from recipe import Recipe
-from ingredient import Ingredient
-from functools import reduce
 from recipeManager import RecipeManager
-from sideDish import SideDish
 from order import Order
 from orderRepository import OrderRepository
 from sideDishManager import SideDishManager
@@ -18,8 +14,8 @@ class OrderManager(Display):
         self.__sideDishManager = SideDishManager()
         self.__recipeManager = RecipeManager()
         self.__ingredientManager = IngredientManager()
-        self.repo = OrderRepository()
-        self.repo.create_file()
+        self.__repo = OrderRepository()
+        self.__repo.create_file()
         self.read_from_db()
 
     def __str__(self) -> str:
@@ -29,11 +25,10 @@ class OrderManager(Display):
         return output
 
     def save_to_db(self) -> None:
-        # pass
-        self.repo.save_items(self.__orderList)
+        self.__repo.save_items(self.__orderList)
 
     def read_from_db(self) -> None:
-        data = self.repo.get_items()
+        data = self.__repo.get_items()
         self.__orderList = data
 
     def getLastOrderId(self) -> int:
@@ -90,17 +85,17 @@ def main():
     print("orderManager")
     orderManager = OrderManager()
     orderManager.display()
-    pizzaManager = PizzaManager()
-    sideDishManager = SideDishManager()
-    print("pizzaManager", pizzaManager.get_pizzaList())
-    print("sideDishManager", sideDishManager.list_dish())
-    VegetarianPizza = pizzaManager.search_by_name("Vegetarian")
-    order_1 = Order(101, "test101", "t101@gmail.comm", "123456789", "C_test101", "12/31/2023", "11:59 PM")
-    if VegetarianPizza is not None:
-        order_1.add_remove_pizza_order(VegetarianPizza, 1)
-    order_1.add_side_dish_in_order("Caesar Salad", 3)
-    orderManager.add_order(order_1)
-    orderManager.display()
+    # pizzaManager = PizzaManager()
+    # sideDishManager = SideDishManager()
+    # print("pizzaManager", pizzaManager.get_pizzaList())
+    # print("sideDishManager", sideDishManager.list_dish())
+    # VegetarianPizza = pizzaManager.search_by_name("Vegetarian")
+    # order_1 = Order(101, "test101", "t101@gmail.comm", "123456789", "C_test101", "12/31/2023", "11:59 PM")
+    # if VegetarianPizza is not None:
+    #     order_1.add_remove_pizza_order(VegetarianPizza, 1)
+    # order_1.add_side_dish_in_order("Caesar Salad", 3)
+    # orderManager.add_order(order_1)
+    # orderManager.display()
 
 
 if __name__ == "__main__":

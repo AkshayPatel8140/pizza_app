@@ -4,7 +4,7 @@ from abstract import *
 from pizza import Pizza
 
 
-class PizzaRepository:
+class PizzaRepository(Repository):
     def __init__(self) -> None:
         self.__filename = "PizzaManagerData.json"
 

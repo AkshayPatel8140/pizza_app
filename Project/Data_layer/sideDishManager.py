@@ -1,7 +1,4 @@
-from abstract import Display, SideDishesCategory as SiDi
-from recipe import Recipe
-from ingredient import Ingredient
-from functools import reduce
+from abstract import Display
 from sideDish import SideDish
 from sideDishRepository import SideDishRepository
 
@@ -9,8 +6,8 @@ from sideDishRepository import SideDishRepository
 class SideDishManager(Display):
     def __init__(self) -> None:
         self.__sideDishList: list[SideDish] = []
-        self.repo = SideDishRepository()
-        self.repo.create_file()
+        self.__repo = SideDishRepository()
+        self.__repo.create_file()
         self.read_from_db()
 
     def __str__(self) -> str:
@@ -20,10 +17,10 @@ class SideDishManager(Display):
         return output
 
     def save_to_db(self) -> None:
-        self.repo.save_items(self.__sideDishList)
+        self.__repo.save_items(self.__sideDishList)
 
     def read_from_db(self) -> None:
-        data = self.repo.get_items()
+        data = self.__repo.get_items()
         self.__sideDishList = data
 
     def add_dish(self, sideDish: SideDish) -> None:
@@ -69,20 +66,6 @@ class SideDishManager(Display):
                 self.save_to_db()
                 return True
         return False
-
-    def useSideDish(self, exitingDish: SideDish, quantity: int = 1) -> None:
-        for dish in self.__sideDishList:
-            if dish == exitingDish:
-                dish.removeQuantity(quantity)
-        self.save_to_db()
-        self.check_reorder_levels()
-
-    def unUseSideDish(self, exitingDish: SideDish, quantity: int = 1) -> None:
-        for dish in self.__sideDishList:
-            if dish == exitingDish:
-                dish.addQuantity(quantity)
-        self.save_to_db()
-        self.check_reorder_levels()
 
     def update_sideDish(self, exitingDish: SideDish, name: str, quantity: int, description: str, reorder_level: int) -> None:
         for dish in self.__sideDishList:

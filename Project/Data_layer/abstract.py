@@ -8,6 +8,20 @@ class Display(ABC):
         pass
 
 
+class Repository(ABC):
+    @abstractmethod
+    def create_file(self):
+        pass
+
+    @abstractmethod
+    def save_items(self, items):
+        pass
+
+    @abstractmethod
+    def get_items(self):
+        pass
+
+
 class IngredientCategory(Enum):
     TOPING = "toping"
     BASE = "base"
