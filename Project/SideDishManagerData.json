@@ -1,0 +1,58 @@
+{
+    "sideDish_0": {
+        "name": "Caesar Salad",
+        "quantity": 20,
+        "description": "Caesar Salad Description",
+        "price": 10,
+        "reorderLevel": 2,
+        "category": "appetizers"
+    },
+    "sideDish_1": {
+        "name": "Tossed Salad",
+        "quantity": 50,
+        "description": "Tossed Salad Description",
+        "price": 10,
+        "reorderLevel": 2,
+        "category": "appetizers"
+    },
+    "sideDish_2": {
+        "name": "Assistant Pop",
+        "quantity": 50,
+        "description": "Assistant Pop Description",
+        "price": 10,
+        "reorderLevel": 2,
+        "category": "appetizers"
+    },
+    "sideDish_3": {
+        "name": "Assistant Juice",
+        "quantity": 50,
+        "description": "Assistant Juice Description",
+        "price": 10,
+        "reorderLevel": 2,
+        "category": "beverages"
+    },
+    "sideDish_4": {
+        "name": "Water",
+        "quantity": 50,
+        "description": "Water Description",
+        "price": 10,
+        "reorderLevel": 2,
+        "category": "beverages"
+    },
+    "sideDish_5": {
+        "name": "Cookies",
+        "quantity": 50,
+        "description": "Cookies Description",
+        "price": 10,
+        "reorderLevel": 2,
+        "category": "desserts"
+    },
+    "sideDish_6": {
+        "name": "Cookies1",
+        "quantity": 150,
+        "description": "Cookies Description",
+        "price": 10,
+        "reorderLevel": 2,
+        "category": "desserts"
+    }
+}

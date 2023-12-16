@@ -1,0 +1,38 @@
+{
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+  },
+  "python.formatting.provider": "none",
+  "black-formatter.args": [
+    "--line-length",
+    "100000"
+  ],
+  "cSpell.words": [
+    "Perticular"
+  ],
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "previewLimit": 50,
+      "server": "127.0.0.1",
+      "port": 3306,
+      "driver": "MySQL",
+      "database": "Reliable_Electronics",
+      "username": "root",
+      "name": "MyDemoTest",
+      "password": "Akshaypatel@1"
+    }
+  ],
+  // "python.analysis.extraPaths": [
+  //   "./Data_layer"
+  // ],
+  "python.autoComplete.extraPaths": [
+    "./Data_layer"
+  ],
+  "python.analysis.extraPaths": [
+    "./Data_layer"
+  ]
+}

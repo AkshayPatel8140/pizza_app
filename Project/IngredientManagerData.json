@@ -1,0 +1,72 @@
+{
+    "Pepperoni": {
+        "name": "Pepperoni",
+        "quantity": 50,
+        "unit": "peas",
+        "reorderLevel": 5,
+        "category": "toping"
+    },
+    "Hum": {
+        "name": "Hum",
+        "quantity": 50,
+        "unit": "peas",
+        "reorderLevel": 5,
+        "category": "toping"
+    },
+    "Bacon": {
+        "name": "Bacon",
+        "quantity": 50,
+        "unit": "peas",
+        "reorderLevel": 5,
+        "category": "toping"
+    },
+    "Mushroom": {
+        "name": "Mushroom",
+        "quantity": 50,
+        "unit": "peas",
+        "reorderLevel": 5,
+        "category": "toping"
+    },
+    "Onion": {
+        "name": "Onion",
+        "quantity": 50,
+        "unit": "peas",
+        "reorderLevel": 5,
+        "category": "toping"
+    },
+    "Black Olives": {
+        "name": "Black Olives",
+        "quantity": 50,
+        "unit": "pack",
+        "reorderLevel": 5,
+        "category": "toping"
+    },
+    "Tomato Slices": {
+        "name": "Tomato Slices",
+        "quantity": 50,
+        "unit": "peas",
+        "reorderLevel": 5,
+        "category": "toping"
+    },
+    "Extra Cheese": {
+        "name": "Extra Cheese",
+        "quantity": 50,
+        "unit": "peas",
+        "reorderLevel": 5,
+        "category": "toping"
+    },
+    "Pineapple": {
+        "name": "Pineapple",
+        "quantity": 50,
+        "unit": "pack(10 peas)",
+        "reorderLevel": 5,
+        "category": "toping"
+    },
+    "test": {
+        "name": "test",
+        "quantity": 100,
+        "unit": "testUnit",
+        "reorderLevel": 10,
+        "category": "base"
+    }
+}

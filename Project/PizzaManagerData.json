@@ -1,0 +1,26 @@
+{
+    "pizza_0": {
+        "name": "Vegetarian",
+        "description": "Mushrooms, Olives, Onion, Peppers, Tomato",
+        "basePrice": 15.5,
+        "size": "Small",
+        "recipe": "test1",
+        "category": "vegetarian"
+    },
+    "pizza_1": {
+        "name": "Vegetarian2",
+        "description": "Olives, Onion, Peppers, Tomato",
+        "basePrice": 20.5,
+        "size": "Medium",
+        "recipe": "test2",
+        "category": "vegetarian"
+    },
+    "pizza_2": {
+        "name": "Vegetarian3",
+        "description": "Onion, Peppers, Tomato",
+        "basePrice": 25.5,
+        "size": "Large",
+        "recipe": "test2",
+        "category": "vegetarian"
+    }
+}
