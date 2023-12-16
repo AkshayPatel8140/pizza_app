@@ -1,11 +1,11 @@
 {
-    "100": {
-        "order_id": 100,
-        "c_name": "test100",
-        "c_email": "t100@gmail.comm",
+    "101": {
+        "order_id": 101,
+        "c_name": "test101",
+        "c_email": "t101@gmail.comm",
         "c_phone_no": "123456789",
-        "compony": "C_test100",
-        "total_price": 15.5,
+        "compony": "C_test101",
+        "total_price": 45.5,
         "d_date": "12/31/2023",
         "d_time": "11:59 PM",
         "pizza_list": {
@@ -26,15 +26,15 @@
             }
         }
     },
-    "101": {
-        "order_id": 101,
-        "c_name": "test101",
-        "c_email": "t101@gmail.comm",
-        "c_phone_no": "123456789",
-        "compony": "C_test101",
-        "total_price": 15.5,
-        "d_date": "12/31/2023",
-        "d_time": "11:59 PM",
+    "102": {
+        "order_id": 102,
+        "c_name": "test",
+        "c_email": "test",
+        "c_phone_no": "test",
+        "compony": "test",
+        "total_price": 115.5,
+        "d_date": "12/23/2023",
+        "d_time": "11:12 AM",
         "pizza_list": {
             "pizza_0": {
                 "name": "Vegetarian",
@@ -48,8 +48,8 @@
         },
         "sideDish_list": {
             "sideDish_0": {
-                "name": "Caesar Salad",
-                "quantity": 3
+                "name": "Cookies1",
+                "quantity": 10
             }
         }
     }

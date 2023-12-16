@@ -63,6 +63,14 @@ class Recipe(Display):
                 listOfIngredients += ", "
         return listOfIngredients
 
+    def remove_ingredient_quantity_in_db(self, db) -> None:
+        for ingredients_name in self.__ingredientsNew:
+            db.remove_quantity(ingredients_name, self.__ingredientsNew[ingredients_name])
+
+    def add_ingredient_quantity_in_db(self, db) -> None:
+        for ingredients_name in self.__ingredientsNew:
+            db.add_quantity(ingredients_name, self.__ingredientsNew[ingredients_name])
+
     def display(self):
         print(str(self))
 

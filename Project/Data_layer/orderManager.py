@@ -4,15 +4,20 @@ from pizzaManager import PizzaManager
 from recipe import Recipe
 from ingredient import Ingredient
 from functools import reduce
+from recipeManager import RecipeManager
 from sideDish import SideDish
 from order import Order
 from orderRepository import OrderRepository
 from sideDishManager import SideDishManager
+from ingredientManager import IngredientManager
 
 
 class OrderManager(Display):
     def __init__(self) -> None:
         self.__orderList: list[Order] = []
+        self.__sideDishManager = SideDishManager()
+        self.__recipeManager = RecipeManager()
+        self.__ingredientManager = IngredientManager()
         self.repo = OrderRepository()
         self.repo.create_file()
         self.read_from_db()
@@ -47,7 +52,18 @@ class OrderManager(Display):
     def remove_order(self, order_id: int) -> bool:
         for i, order in enumerate(self.__orderList):
             if order.order_id == order_id:
+                sideDish: list[tuple[str, int, float]] = order.get_sideDishes()
+                for dish in sideDish:
+                    self.__sideDishManager.add_quantity(dish[0], dish[1])
+                pizzaList: list[tuple[Pizza, int]] = order.get_pizza()
+                for pizza in pizzaList:
+                    print("pizza", pizza[0].recipe)
+                    recipeData = self.__recipeManager.get_recipe_by_name(pizza[0].recipe)
+                    if recipeData is not None:
+                        for i in range(pizza[1]):
+                            recipeData.add_ingredient_quantity_in_db(self.__ingredientManager)
                 self.__orderList.pop(i)
+                self.save_to_db()
                 return True
         self.save_to_db()
         return False

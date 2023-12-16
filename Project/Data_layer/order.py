@@ -87,6 +87,12 @@ class Order(Display):
     def __repr__(self) -> str:
         return "\n{\n " + str(self) + "}"
 
+    def get_sideDishes(self) -> list[tuple[str, int, float]]:
+        return self.__sideDishes.copy()
+
+    def get_pizza(self) -> list[tuple[Pizza, int]]:
+        return self.__order_pizzas.copy()
+
     def display(self):
         print(str(self))
 

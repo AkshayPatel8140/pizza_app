@@ -482,11 +482,19 @@ class PizzaApp:
         order = Order(order_id, c_name, c_email, c_phone_no, compony, date, time)
         for dish in sideDishList:
             order.add_side_dish_in_order(dish, sideDishList[dish])
+            self.__sideDishManager.remove_quantity(dish, sideDishList[dish])
         for pizzaData in prePizzaList:
             order.add_remove_pizza_order(pizzaData[0], pizzaData[1])
+            recipeData = self.__recipeManager.get_recipe_by_name(pizzaData[0].recipe)
+            if recipeData is not None:
+                for i in range(pizzaData[1]):
+                    recipeData.remove_ingredient_quantity_in_db(self.__ingredientManager)
         for customPizzaData in customPizzaList:
             order.add_remove_pizza_order(customPizzaData[0], customPizzaData[1])
-
+            recipeData = self.__recipeManager.get_recipe_by_name(customPizzaData[0].recipe)
+            if recipeData is not None:
+                for i in range(customPizzaData[1]):
+                    recipeData.remove_ingredient_quantity_in_db(self.__ingredientManager)
         return order
 
     def process_command(self, command: int) -> bool:
@@ -647,10 +655,12 @@ class PizzaApp:
                         if newOrder is not None:
                             self.__orderManager.add_order(newOrder)
                             print("\n!! Order added successfully !!")
+                            self.__ingredientManager.check_reorder_levels()
                     elif orderMenuChoice == 5:  # Delete order
                         search_order_id = input("Please enter order Id: ")
                         if search_order_id.isdigit():
                             self.__orderManager.remove_order(int(search_order_id))
+                            print("\n!! Order removed successfully !!")
                         else:
                             print("\n! Please enter proper order Id !")
                     elif orderMenuChoice == 6:  # Exit
