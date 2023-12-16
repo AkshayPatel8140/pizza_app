@@ -28,9 +28,8 @@ class PizzaRepository:
             for i, item in enumerate(items):
                 itemJsonName = f"pizza_{i}"
                 jsonData[itemJsonName] = item.convert_to_dict_for_db()
-            print("🚀 ~ file: pizzaRepository.py:28 ~ jsonData:", jsonData)
-            # json_object = json.dumps(jsonData, indent=4)
-            # file.write(json_object)
+            json_object = json.dumps(jsonData, indent=4)
+            file.write(json_object)
 
     def get_items(self) -> list[Pizza]:
         resultData = []

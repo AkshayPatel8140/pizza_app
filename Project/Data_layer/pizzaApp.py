@@ -2,6 +2,7 @@ from abstract import *
 from ingredient import Ingredient
 from ingredientManager import IngredientManager
 from orderManager import OrderManager
+from pizza import Pizza
 from pizzaManager import PizzaManager
 from recipe import Recipe
 from recipeManager import RecipeManager
@@ -14,6 +15,7 @@ class PizzaApp:
         self.__ingredientManager = IngredientManager()
         self.__sideDishManager = SideDishManager()
         self.__recipeManager = RecipeManager()
+        self.__pizzaManager = PizzaManager()
 
     def show_program_title(self) -> None:
         print("\n===!! SFBU Pizza system !!===\n")
@@ -152,7 +154,7 @@ class PizzaApp:
         elif quantity.isdigit() == False:
             print("Quantity should be digit")
             return None
-        elif price.isdigit() == False:
+        elif is_number_float(price) == False:
             print("Price should be digit")
             return None
         elif int(quantity) <= 0:
@@ -200,7 +202,7 @@ class PizzaApp:
         print("5. Update the Recipe")
         print("6. Exit")
 
-    def addIngredientInRecipe(self, recipe: Recipe) -> Recipe:
+    def addIngredientInRecipe(self, recipe: Recipe) -> Recipe | None:
         confirmCount = True
         while confirmCount:
             print("Ingredient list : ")
@@ -280,6 +282,96 @@ class PizzaApp:
             self.__recipeManager.update_recipe(searchRecipe, recipeNewName, newIngredient)
         else:
             print(f"{recipeName} is not present in the database")
+
+    # Pizza Methods
+    def show_Pizza_Management(self) -> None:
+        print("\n=== Pizza Management ===")
+        print("1. Get list of Pizza")
+        print("2. Search Pizza by name")
+        print("3. Add New Pizza")
+        print("4. Delete Pizza")
+        print("5. Exit")
+
+    def get_pizza_size(self) -> PizzaSize:
+        while True:
+            print("Select the size of the Pizza: ")
+            print(f"A. {PizzaSize.SMALL.value}")
+            print(f"B. {PizzaSize.MEDIUM.value}")
+            print(f"C. {PizzaSize.LARGE.value}")
+            print(f"D. {PizzaSize.EXTRA_LARGE.value}")
+            pizzaSizeChoice = input("Please select you choice: ")
+            if pizzaSizeChoice.lower() == "a":
+                return PizzaSize.SMALL
+            elif pizzaSizeChoice.lower() == "b":
+                return PizzaSize.MEDIUM
+            elif pizzaSizeChoice.lower() == "c":
+                return PizzaSize.LARGE
+            elif pizzaSizeChoice.lower() == "d":
+                return PizzaSize.EXTRA_LARGE
+            else:
+                print("\n!! Please enter the proper choice for pizza size !!\n")
+
+    def get_recipe_for_pizza(self) -> str:
+        print("Recipe: ", self.__recipeManager.list_recipe())
+        while True:
+            name = input("\nPlease enter name of Recipe: ")
+            if name == "":
+                print("Name not should be blank")
+            searchRecipe = self.__recipeManager.get_recipe_by_name(name)
+            if searchRecipe is not None:
+                return searchRecipe.name
+            else:
+                print(f"{name} is not present in the database")
+
+    def get_category_for_pizza(self) -> PizzaCategory:
+        while True:
+            print("Select the category of the Pizza: ")
+            print(f"A. {PizzaCategory.MEAT_LOVERS.value}")
+            print(f"B. {PizzaCategory.SPECIALTY.value}")
+            print(f"C. {PizzaCategory.VEGETARIAN.value}")
+            pizzaCategoryChoice = input("Please select you choice: ")
+            if pizzaCategoryChoice.lower() == "a":
+                return PizzaCategory.MEAT_LOVERS
+            elif pizzaCategoryChoice.lower() == "b":
+                return PizzaCategory.SPECIALTY
+            elif pizzaCategoryChoice.lower() == "c":
+                return PizzaCategory.VEGETARIAN
+            else:
+                print("\n!! Please enter the proper choice for pizza Category !!\n")
+
+    def createPizza(self) -> Pizza | None:
+        name = input("Please enter name of Pizza: ")
+        if name == "":
+            print("Name not should be blank")
+            return None
+        description = input("Please enter description of pizza: ")
+        if description == "":
+            print("Description not should be blank")
+            return None
+        basePrice = input("Please enter basePrice of pizza: ")
+        if is_number_float(basePrice) == False:
+            print("Price should be digit")
+            return None
+        elif float(basePrice) <= 0:
+            print("Price should not be 0")
+            return None
+        pizzaSize = self.get_pizza_size()
+        pizzaRecipe = self.get_recipe_for_pizza()
+        pizzaCategory = self.get_category_for_pizza()
+
+        return Pizza(name, description, float(basePrice), pizzaSize, pizzaRecipe, pizzaCategory)
+
+    def deletePizza(self) -> None:
+        name = input("Please enter name of Pizza: ")
+        if name == "":
+            print("Name not should be blank")
+            return None
+        searchedItem = self.__pizzaManager.search_by_name(name)
+        if searchedItem is not None:
+            self.__pizzaManager.remove_pizza(searchedItem)
+            print("\n!! Pizza removed !!")
+        else:
+            print("Pizza not found")
 
     def process_command(self, command: int) -> bool:
         count = True
@@ -380,8 +472,34 @@ class PizzaApp:
                         print("\n!!Please Enter proper choice to manage Recipe !!")
                 else:
                     print("\n!! Please enter proper value to manage Recipe !!")
-        elif command == 4:
-            pass
+        elif command == 4:  # Pizza Management
+            while True:
+                self.show_Pizza_Management()
+                pizzaMenuChoice = input("Please select you choice: ")
+                if pizzaMenuChoice.isdigit():
+                    pizzaMenuChoice = int(pizzaMenuChoice)
+                    if pizzaMenuChoice == 1:  # Get list of Pizza
+                        self.__pizzaManager.read_from_db()
+                        self.__pizzaManager.display()
+                    elif pizzaMenuChoice == 2:  # Get Pizza by name
+                        search_name = input("Please enter name of Pizza: ")
+                        searchedItem = self.__pizzaManager.search_by_name(search_name)
+                        if searchedItem is not None:
+                            searchedItem.display()
+                        else:
+                            print("Pizza not found")
+                    elif pizzaMenuChoice == 3:  # Add New Pizza
+                        newPizza = self.createPizza()
+                        if newPizza is not None:
+                            self.__pizzaManager.add_new_pizza(newPizza)
+                    elif pizzaMenuChoice == 4:  # Delete Pizza
+                        self.deletePizza()
+                    elif pizzaMenuChoice == 5:  # Exit
+                        break
+                    else:
+                        print("\n!!Please Enter proper choice to manage Pizza !!")
+                else:
+                    print("\n!! Please enter proper value to manage Pizza !!")
         elif command == 5:
             pass
         elif command == 6:

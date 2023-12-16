@@ -30,3 +30,10 @@ class PizzaSize(Enum):
     MEDIUM = "Medium"
     LARGE = "Large"
     EXTRA_LARGE = "Extra_Large"
+
+
+def is_number_float(string: str):
+    if string.replace(".", "").isdigit():
+        return True
+    else:
+        return False
