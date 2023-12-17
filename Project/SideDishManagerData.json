@@ -25,7 +25,7 @@
     },
     "sideDish_3": {
         "name": "Assistant Juice",
-        "quantity": 50,
+        "quantity": 48,
         "description": "Assistant Juice Description",
         "price": 10,
         "reorderLevel": 2,
@@ -41,7 +41,7 @@
     },
     "sideDish_5": {
         "name": "Cookies",
-        "quantity": 50,
+        "quantity": 60,
         "description": "Cookies Description",
         "price": 10,
         "reorderLevel": 2,

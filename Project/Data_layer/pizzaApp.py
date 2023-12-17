@@ -111,7 +111,7 @@ class PizzaApp:
 
     # SideDish methods
     def show_Menu_SideDish_Management(self) -> None:
-        print("\n=== SideMenu Management ===")
+        print("\n=== SideDish Management ===")
         print("1. Get list of SideDish")
         print("2. Search SideDish by name")
         print("3. Add New SideDish")
@@ -341,7 +341,7 @@ class PizzaApp:
             else:
                 print("\n!! Please enter the proper choice for pizza Category !!\n")
 
-    def createPizza(self) -> Pizza | None:
+    def createPizza(self, isForCustom: bool = False) -> Pizza | None:
         name = input("Please enter name of Pizza: ")
         if name == "":
             print("Name not should be blank")
@@ -350,7 +350,11 @@ class PizzaApp:
         if description == "":
             print("Description not should be blank")
             return None
-        basePrice = input("Please enter basePrice of pizza: ")
+        basePrice = ""
+        if isForCustom == True:
+            basePrice = "20"
+        else:
+            basePrice = input("Please enter basePrice of pizza: ")
         if is_number_float(basePrice) == False:
             print("Price should be digit")
             return None
@@ -435,7 +439,7 @@ class PizzaApp:
         pizzaList = []
         confirmStatus = True
         while confirmStatus:
-            selectedPizza = self.createPizza()
+            selectedPizza = self.createPizza(True)
             pizzaQuantity = input("Enter the quantity of the pizza : ")
             if pizzaQuantity.isdigit():
                 pizzaList.append((selectedPizza, int(pizzaQuantity)))

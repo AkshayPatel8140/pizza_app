@@ -68,5 +68,54 @@
         "unit": "testUnit",
         "reorderLevel": 10,
         "category": "base"
+    },
+    "Milk": {
+        "name": "Milk",
+        "quantity": 50,
+        "unit": "liter",
+        "reorderLevel": 5,
+        "category": "base"
+    },
+    "olive oil": {
+        "name": "olive oil",
+        "quantity": 50,
+        "unit": "Liter",
+        "reorderLevel": 10,
+        "category": "base"
+    },
+    "oregano": {
+        "name": "oregano",
+        "quantity": 50,
+        "unit": "kg",
+        "reorderLevel": 1,
+        "category": "toping"
+    },
+    "tomato": {
+        "name": "tomato",
+        "quantity": 50,
+        "unit": "kg",
+        "reorderLevel": 5,
+        "category": "toping"
+    },
+    "olives": {
+        "name": "olives",
+        "quantity": 30,
+        "unit": "kg",
+        "reorderLevel": 2,
+        "category": "toping"
+    },
+    "mozzarella": {
+        "name": "mozzarella",
+        "quantity": 40,
+        "unit": "pound",
+        "reorderLevel": 2,
+        "category": "base"
+    },
+    "cheese": {
+        "name": "cheese",
+        "quantity": 30,
+        "unit": "kg",
+        "reorderLevel": 5,
+        "category": "base"
     }
 }

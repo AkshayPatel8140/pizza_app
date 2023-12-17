@@ -22,5 +22,13 @@
         "size": "Large",
         "recipe": "test2",
         "category": "vegetarian"
+    },
+    "pizza_3": {
+        "name": "test",
+        "description": "test description",
+        "basePrice": 20.0,
+        "size": "Small",
+        "recipe": "test4",
+        "category": "specialty"
     }
 }

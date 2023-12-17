@@ -92,7 +92,7 @@ class SideDishManager(Display):
                 print(f"\n{ingredient.name} is Low in the quantity, Please Load More!\n")
 
     def display(self):
-        print("\nIngredient Inventory Details\n")
+        print("\nSide Dish Inventory Details\n")
         for ingredient in self.__sideDishList:
             print(f"{ingredient.name}({ingredient.quantity}): ${ingredient.price}")
 
